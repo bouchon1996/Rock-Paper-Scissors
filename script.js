@@ -1,44 +1,49 @@
 function getComputerChoice() {
-    let choices = ['Rock', 'Paper', 'Scissors'];
-    let length = choices.length;
+    let length = CHOICES.length;
     let choiceIndex = Math.floor((Math.random() * length));
-    let choice = choices[choiceIndex];
+    let choice = CHOICES[choiceIndex];
     console.log(`Computer selects ${choice}`);
     return choice.toLowerCase;
 }
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
-        let message = "It's a tie! You both chose " + playerSelection;
-        return message;
+        console.log("It's a tie! You both chose " + playerSelection);
+        return 0;
     } 
-    else if ((playerSelection == 'rock' && computerSelection == 'paper') || (playerSelection == 'paper' && computerSelection == scissors') || (playerSelection == 'scissors' && computerSelection == 'rock')) {
-        let message = `You Lose! ${computerSelection} beats ${playerSelection}!`
-        return message;
+    else if ((playerSelection == 'rock' && computerSelection == 'paper') || (playerSelection == 'paper' && computerSelection == 'scissors') || (playerSelection == 'scissors' && computerSelection == 'rock')) {
+        console.log(`You Lose! ${computerSelection} beats ${playerSelection}!`);
+        return -1;
     }
     else {
-        let message = `You Win! ${playerSelection} beats ${computerSelection}!`
-        return message;
+        console.log(`You Win! ${playerSelection} beats ${computerSelection}!`);
+        return 1;
     }
   }
 
-  function playGame() {
-      for (let i = 0; i < 4; i++) {
-        playRound(playerSelection, computerSelection)
-
-      }
+function playGame() {
+  let score = 0;
+    for (let i = 0; i < 4; i++) {
+      score += playRound(playerSelection, computerSelection);
+    }
+  if (score > 0) {
+    console.log(`You Win!`)
   }
+  else {
+    console.log('You Lose!')
+  }
+}
   
   function promptPlayer() {
-    let playerSelection = 'Default'
-    while (!(playerSelection in ['rock', 'paper', 'scissors'])) {
-        playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();
+    do {
+        let userText = prompt("Rock, Paper, or Scissors?").toLowerCase();
+        return userText;
     }
-    return playerSelection;
+    while (CHOICES.indexOf(userText)==-1);
   }
 
-
+  const CHOICES = ['rock', 'paper', 'scissors'];  
   const playerSelection = promptPlayer();
-  console.log(`User selects ${playerSelection}`)
+  console.log(`User selects ${playerSelection}`);
   const computerSelection = getComputerChoice();
-  console.log(playRound(playerSelection, computerSelection));
+  playGame();
