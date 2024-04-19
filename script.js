@@ -3,7 +3,8 @@ function getComputerChoice() {
     let choiceIndex = Math.floor((Math.random() * length));
     let choice = CHOICES[choiceIndex];
     console.log(`Computer selects ${choice}`);
-    return choice.toLowerCase;
+    let lowerChoice = choice.toLowerCase();
+    return lowerChoice;
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -23,27 +24,29 @@ function playRound(playerSelection, computerSelection) {
 
 function playGame() {
   let score = 0;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
+      let playerSelection = promptPlayer();
+      console.log(`User selects ${playerSelection}`);
+      let computerSelection = getComputerChoice();
       score += playRound(playerSelection, computerSelection);
     }
   if (score > 0) {
-    console.log(`You Win!`)
+    console.log(`You Win!`);
+  }
+  else if (score == 0) {
+    console.log('You Tied!');
   }
   else {
-    console.log('You Lose!')
+    console.log('You Lose!');
   }
 }
   
-  function promptPlayer() {
-    do {
-        let userText = prompt("Rock, Paper, or Scissors?").toLowerCase();
-        return userText;
-    }
-    while (CHOICES.indexOf(userText)==-1);
+function promptPlayer() {
+  do {
+      let userText = prompt("Rock, Paper, or Scissors?").toLowerCase();
+      return userText;
   }
-
+  while (CHOICES.indexOf(userText)==-1);
+}
   const CHOICES = ['rock', 'paper', 'scissors'];  
-  const playerSelection = promptPlayer();
-  console.log(`User selects ${playerSelection}`);
-  const computerSelection = getComputerChoice();
   playGame();
